@@ -1,4 +1,6 @@
 import { Upload, Calendar, MapPin, Clock } from 'lucide-react';
+import bg from '../assets/bg.jpg';
+import logo from '../assets/logo.png';
 
 const Design1 = ({ attendeeData }) => {
   return (
@@ -7,7 +9,7 @@ const Design1 = ({ attendeeData }) => {
       <div 
         className="absolute inset-0 opacity-30" 
         style={{
-          backgroundImage: 'url(/src/assets/bg.jpg)', 
+          backgroundImage: `url(${bg})`, 
           backgroundSize: 'cover', 
           backgroundPosition: 'center'
         }}
@@ -25,8 +27,7 @@ const Design1 = ({ attendeeData }) => {
       <div className="relative h-full flex flex-col p-4 sm:p-8">
         {/* Top sponsor bar with logo */}
         <div className="bg-white border-2 border-gray-300 rounded-lg p-2 sm:p-3 mb-4 flex items-center justify-center gap-2 sm:gap-3">
-          <img src="/src/assets/logo.png" alt="Logo" className="h-8 sm:h-12 w-auto" />
-          <div className="font-black text-sm sm:text-base" style={{color: '#9B2A26'}}>ELP TECH HUB</div>
+          <img src={logo} alt="Logo" className="h-8 sm:h-12 w-auto" />
         </div>
 
         {/* Top right badge - moved to avoid overlap */}
@@ -73,13 +74,13 @@ const Design1 = ({ attendeeData }) => {
         </div>
 
         {/* Attendee info section */}
-        <div className="bg-gradient-to-r from-gray-50 to-white rounded-lg p-2 sm:p-3 mb-3 shadow-lg border-l-4" style={{borderLeftColor: '#9B2A26'}}>
-          <p className="text-base sm:text-lg font-black text-gray-900 mb-1">{attendeeData.name}</p>
-          <p className="text-xs sm:text-sm font-semibold text-gray-700">{attendeeData.title}</p>
+        <div className="bg-gradient-to-r from-gray-50 to-white rounded-lg p-3 mb-3 shadow-lg border-l-4" style={{borderLeftColor: '#9B2A26'}}>
+          <p className="text-lg font-black text-gray-900 mb-1">{attendeeData.name}</p>
+          <p className="text-sm font-semibold text-gray-700">{attendeeData.title}</p>
         </div>
 
         {/* Event details */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-3">
+        <div className="grid grid-cols-3 gap-2 mb-3">
           <div className="bg-white p-2 rounded-lg shadow border-l-4" style={{borderLeftColor: '#9B2A26'}}>
             <div className="mb-1" style={{color: '#9B2A26'}}>
               <Calendar size={16} strokeWidth={2} />
@@ -104,8 +105,8 @@ const Design1 = ({ attendeeData }) => {
         </div>
 
         {/* Hashtags section */}
-        <div className="bg-gradient-to-r from-yellow-500 via-yellow-400 to-yellow-500 text-center py-1.5 sm:py-2 rounded-lg">
-          <div className="flex items-center justify-center gap-1.5 sm:gap-2 text-[11px] sm:text-xs font-bold text-gray-900 flex-wrap">
+        <div className="bg-gradient-to-r from-yellow-500 via-yellow-400 to-yellow-500 text-center py-2 rounded-lg">
+          <div className="flex items-center justify-center gap-2 text-xs font-bold text-gray-900 flex-wrap">
             <span>#NetworkingDinner</span>
             <span>#ELPTechHub</span>
             <span>#Innovation</span>
