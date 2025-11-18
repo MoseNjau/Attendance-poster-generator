@@ -26,8 +26,8 @@ const Design1 = ({ attendeeData }) => {
       {/* Content */}
       <div className="relative h-full flex flex-col p-4 sm:p-8">
         {/* Top sponsor bar with logo */}
-        <div className="bg-white border-2 border-gray-300 rounded-lg p-2 sm:p-3 mb-4 flex items-center justify-center gap-2 sm:gap-3">
-          <img src={logo} alt="Logo" className="h-8 sm:h-12 w-auto" />
+        <div className="bg-white border-2 border-gray-300 rounded-lg p-1 sm:p-2 mb-4 flex items-center justify-center gap-2 sm:gap-3">
+          <img src={logo} alt="Logo" className="h-12 sm:h-14 w-auto" />
         </div>
 
         {/* Top right badge - moved to avoid overlap */}
