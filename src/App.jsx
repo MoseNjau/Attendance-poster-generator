@@ -1,9 +1,11 @@
-// App.jsx
-import React, { useState } from 'react';
+// App.jsx — Added dynamic scaling for mobile preview
+
+import React, { useState, useEffect } from 'react';
 import { Upload, Download } from 'lucide-react';
 import Design1 from './components/Design1';
 import Design2 from './components/Design2';
 import Design3 from './components/Design3';
+import Design4 from './components/Design4';
 
 export default function AttendingPosterGenerator() {
   const [attendeeData, setAttendeeData] = useState({
@@ -12,7 +14,6 @@ export default function AttendingPosterGenerator() {
     photo: null
   });
 
-  // ✅ Event data is now centrally defined (and can be changed or loaded externally)
   const [eventData] = useState({
     date: '29th Nov 2025',
     venue: 'BRITAM TOWERS, UpperHill',
@@ -20,6 +21,25 @@ export default function AttendingPosterGenerator() {
   });
 
   const [selectedDesign, setSelectedDesign] = useState(1);
+  const [mobileScale, setMobileScale] = useState(1);
+
+  // Calculate scale factor based on screen width
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      if (width < 480) {
+        setMobileScale(0.9); // Slight shrink on mobile
+      } else if (width < 768) {
+        setMobileScale(0.95); // Minor shrink on tablet
+      } else {
+        setMobileScale(1);
+      }
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
@@ -41,7 +61,7 @@ export default function AttendingPosterGenerator() {
 
     try {
       const htmlToImage = await import('https://cdn.skypack.dev/html-to-image@1.11.11');
-      
+
       const toDataURL = (url) => {
         return new Promise((resolve) => {
           const img = new Image();
@@ -62,10 +82,10 @@ export default function AttendingPosterGenerator() {
       const originalStyles = [];
       const images = [];
       const nodes = posterElement.querySelectorAll('*');
-      
+
       nodes.forEach((node) => {
         const computedStyle = window.getComputedStyle(node);
-        
+
         originalStyles.push({
           node,
           backgroundImage: node.style.backgroundImage,
@@ -75,7 +95,7 @@ export default function AttendingPosterGenerator() {
           backdropFilter: node.style.backdropFilter,
           webkitBackdropFilter: node.style.webkitBackdropFilter
         });
-        
+
         if (computedStyle.backgroundImage && computedStyle.backgroundImage !== 'none') {
           const match = computedStyle.backgroundImage.match(/url\(["']?(.*?)["']?\)/);
           if (match && match[1]) {
@@ -85,12 +105,12 @@ export default function AttendingPosterGenerator() {
             }
           }
         }
-        
+
         if (node.tagName === 'IMG' && node.src && !node.src.startsWith('data:')) {
           images.push({ node, imgUrl: node.src, isBackground: false });
         }
       });
-      
+
       await Promise.all(images.map(async ({ node, imgUrl, isBackground }) => {
         try {
           const dataUrl = await toDataURL(imgUrl);
@@ -104,7 +124,7 @@ export default function AttendingPosterGenerator() {
           console.warn('Failed to process image:', imgUrl, e);
         }
       }));
-      
+
       await new Promise(resolve => setTimeout(resolve, 500));
 
       const dataUrl = await htmlToImage.toPng(posterElement, {
@@ -123,13 +143,12 @@ export default function AttendingPosterGenerator() {
         },
       });
 
-      // Restore original styles
       originalStyles.forEach(({ node, ...styles }) => {
         Object.entries(styles).forEach(([key, value]) => {
           node.style[key] = value || '';
         });
       });
-      
+
       images.forEach(({ node, imgUrl, isBackground }) => {
         if (isBackground) {
           const currentBg = node.style.backgroundImage;
@@ -159,12 +178,12 @@ export default function AttendingPosterGenerator() {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-1 sm:mb-2">I Will Be Attending</h1>
           <p className="text-base sm:text-lg text-orange-300">Poster Generator</p>
         </div>
-        
-        <div className="grid lg:grid-cols-2 gap-4 sm:gap-8">
+
+        <div className="grid lg:grid-cols-2 gap-4 sm:gap-8 items-start">
           {/* Editor Panel */}
           <div className="bg-white/5 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-4 sm:p-8 border border-white/10">
             <h2 className="text-xl sm:text-2xl font-bold text-white mb-3 sm:mb-4">Your Details</h2>
-            
+
             <div className="space-y-3 sm:space-y-4">
               <div>
                 <label className="block text-white text-sm sm:text-base mb-1.5 sm:mb-2 font-semibold">Upload Your Photo</label>
@@ -203,7 +222,7 @@ export default function AttendingPosterGenerator() {
 
               <div>
                 <label className="block text-white text-sm sm:text-base mb-1.5 sm:mb-2 font-semibold">Select Design Style</label>
-                <div className="grid grid-cols-3 gap-2 sm:gap-3">
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
                   <button
                     onClick={() => setSelectedDesign(1)}
                     className={`p-2.5 sm:p-4 rounded-lg font-bold text-xs sm:text-base transition transform hover:scale-105 ${
@@ -235,9 +254,22 @@ export default function AttendingPosterGenerator() {
                         ? 'text-white shadow-2xl'
                         : 'bg-white/10 text-white border-2 border-white/20 hover:border-orange-500'
                     }`}
-                    style={selectedDesign === 3 ? {background: 'linear-gradient(to bottom right, #f97316, #9B2A26)'} : {}}>
+                    style={selectedDesign === 3 ? {background: 'linear-gradient(to bottom right, #f97316, #9B2A26)'} : {}}
+                  >
                     Design 3<br/>
                     <span className="text-[10px] sm:text-sm font-normal">Elegant</span>
+                  </button>
+                  <button
+                    onClick={() => setSelectedDesign(4)}
+                    className={`p-2.5 sm:p-4 rounded-lg font-bold text-xs sm:text-base transition transform hover:scale-105 ${
+                      selectedDesign === 4
+                        ? 'text-white shadow-2xl'
+                        : 'bg-white/10 text-white border-2 border-white/20 hover:border-orange-500'
+                    }`}
+                    style={selectedDesign === 4 ? {background: 'linear-gradient(to bottom right, #f97316, #9B2A26)'} : {}}
+                  >
+                    Design 4<br/>
+                    <span className="text-[10px] sm:text-sm font-normal">Invitation</span>
                   </button>
                 </div>
               </div>
@@ -256,10 +288,24 @@ export default function AttendingPosterGenerator() {
           {/* Preview Panel */}
           <div className="bg-white/5 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-4 sm:p-8 border border-white/10">
             <h2 className="text-xl sm:text-2xl font-bold text-white mb-3 sm:mb-4">Live Preview</h2>
-            
-            {selectedDesign === 1 && <Design1 attendeeData={attendeeData} eventData={eventData} />}
-            {selectedDesign === 2 && <Design2 attendeeData={attendeeData} eventData={eventData} />}
-            {selectedDesign === 3 && <Design3 attendeeData={attendeeData} eventData={eventData} />}
+
+            <div
+              className="relative w-full h-full flex items-center justify-center"
+              style={{
+                transform: `scale(${mobileScale})`,
+                transformOrigin: 'top center',
+                width: '100%',
+                height: '100%',
+                maxWidth: '600px',
+                maxHeight: '600px',
+                overflow: 'hidden'
+              }}
+            >
+              {selectedDesign === 1 && <Design1 attendeeData={attendeeData} eventData={eventData} />}
+              {selectedDesign === 2 && <Design2 attendeeData={attendeeData} eventData={eventData} />}
+              {selectedDesign === 3 && <Design3 attendeeData={attendeeData} eventData={eventData} />}
+              {selectedDesign === 4 && <Design4 attendeeData={attendeeData} eventData={eventData} />}
+            </div>
 
             <div className="mt-4 sm:mt-6 bg-orange-500/10 border border-orange-500/30 rounded-lg sm:rounded-xl p-3 sm:p-4">
               <p className="text-orange-200 text-xs sm:text-sm text-center font-semibold">
