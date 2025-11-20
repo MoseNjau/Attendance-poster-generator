@@ -58,7 +58,7 @@ const Design4 = ({ attendeeData, eventData }) => {
             {/* Invitation */}
             <div className="mb-1 sm:mb-2 relative bottom-[3px]">
               <p className="text-[10px] sm:text-xs md:text-sm text-gray-700">
-                ...cordially invites you to our...
+                ...we cordially invite you to our...
               </p>
               <h1 className="text-xl sm:text-3xl md:text-4xl font-black leading-none -mb-0.5 sm:-mb-1" style={{color: '#9B2A26'}}>
                 Annual Networking
