@@ -1,6 +1,7 @@
 import { Calendar, MapPin, Clock, Phone } from 'lucide-react';
 import bg from '../assets/bg.jpg';
 import logo from '../assets/logo.png';
+import payment from '../assets/payment.jpg';
 
 const Design4 = ({ attendeeData, eventData }) => {
   return (
@@ -41,42 +42,56 @@ const Design4 = ({ attendeeData, eventData }) => {
         </div>
 
         {/* Main Content */}
-        <div className="flex-1 flex flex-col justify-center text-left">
-          {/* Guest Intro */}
-          <div className="mb-2 sm:mb-3 md:mb-4">
-            <h3 className="text-base sm:text-lg md:text-xl font-bold text-black" style={{fontFamily: '"Playfair Display", serif'}}>
-              Dear {attendeeData.name},
-            </h3>
-            <p className="text-xs sm:text-sm md:text-base text-gray-800 italic">
-              {attendeeData.title}
-            </p>
+        <div className="flex-1 flex justify-between items-center text-left">
+          {/* Left Column for Text */}
+          <div className="flex flex-col justify-center w-7/10 pr-2">
+            {/* Guest Intro */}
+            <div className="mb-2 sm:mb-3 md:mb-4 relative bottom-[3px]">
+              <h3 className="text-base sm:text-lg md:text-xl font-bold text-black" style={{fontFamily: '"Playfair Display", serif'}}>
+                Dear {attendeeData.name},
+              </h3>
+              <p className="text-xs sm:text-sm md:text-base text-gray-800 italic">
+                {attendeeData.title}
+              </p>
+            </div>
+
+            {/* Invitation */}
+            <div className="mb-1 sm:mb-2 relative bottom-[3px]">
+              <p className="text-[10px] sm:text-xs md:text-sm text-gray-700">
+                ...cordially invites you to our...
+              </p>
+              <h1 className="text-xl sm:text-3xl md:text-4xl font-black leading-none -mb-0.5 sm:-mb-1" style={{color: '#9B2A26'}}>
+                Annual Networking
+              </h1>
+              <h1 className="text-xl sm:text-3xl md:text-4xl font-black leading-none" style={{color: '#9B2A26'}}>
+                Dinner
+              </h1>
+            </div>
+
+            <div className="inline-block bg-gradient-to-r from-yellow-500 to-orange-500 text-black px-2 sm:px-3 py-0.5 sm:py-1 rounded-full shadow-lg self-start mb-1 sm:mb-2">
+              <p className="font-bold text-[6px] sm:text-[8px] md:text-xs">Innovate. Connect. Grow</p>
+            </div>
+
+            {/* Personal Message & RSVP */}
+            <div className="relative top-[14px]">
+              <p className="text-[7px] sm:text-[10px] md:text-xs text-gray-800 italic max-w-md mb-1">
+                It would be our pleasure to host you for an evening of strategic conversations and meaningful connections.
+              </p>
+              <div className="flex items-center gap-1 sm:gap-2">
+                <Phone size={10} className="sm:w-3 sm:h-3 text-gray-800" strokeWidth={2.5} />
+                <span className="text-gray-800 font-bold text-[7px] sm:text-[10px]">RSVP: 0790638575</span>
+              </div>
+            </div>
           </div>
 
-          {/* Invitation */}
-          <div className="mb-1 sm:mb-2">
-            <p className="text-[10px] sm:text-xs md:text-sm text-gray-700">
-              ...cordially invited to our...
-            </p>
-            <h1 className="text-2xl sm:text-4xl md:text-5xl font-black leading-none -mb-1 sm:-mb-2 md:-mb-3" style={{color: '#9B2A26'}}>
-              Annual Networking
-            </h1>
-            <h1 className="text-2xl sm:text-4xl md:text-5xl font-black leading-none" style={{color: '#9B2A26'}}>
-              Dinner
-            </h1>
-          </div>
-
-          <div className="inline-block bg-gradient-to-r from-yellow-500 to-orange-500 text-black px-2 sm:px-3 py-0.5 sm:py-1 rounded-full shadow-lg self-start mb-2 sm:mb-3 md:mb-4">
-            <p className="font-bold text-[7px] sm:text-[9px] md:text-sm">Innovate. Connect. Grow</p>
-          </div>
-
-          {/* Personal Message & RSVP */}
-          <div>
-            <p className="text-[7px] sm:text-[10px] md:text-xs text-gray-800 italic max-w-[30ch] sm:max-w-[45ch] mb-1 sm:mb-2">
-              It would be our pleasure to host you for an evening of strategic conversations and meaningful connections.
-            </p>
-            <div className="flex items-center gap-1 sm:gap-2">
-              <Phone size={10} className="sm:w-3 sm:h-3 text-gray-800" strokeWidth={2.5} />
-              <span className="text-gray-800 font-bold text-[8px] sm:text-xs">RSVP: 0790638575</span>
+          {/* Right Column for Payment */}
+          <div className="w-3/10 h-full relative">
+            <div className="absolute bottom-0 w-full pb-4 sm:pb-6">
+              <div className="bg-black/20 backdrop-blur-sm rounded-lg sm:rounded-xl p-1 sm:p-1.5 border border-white/20 text-center text-white">
+                <h4 className="font-bold text-[6px] sm:text-[9px] md:text-[10px] text-yellow-400">VIP Contribution</h4>
+                <p className="font-bold text-[10px] sm:text-xs md:text-sm mb-0.5">Ksh 2500 Only</p>
+                <img src={payment} alt="Payment Details" className="w-full rounded-md" />
+              </div>
             </div>
           </div>
         </div>
