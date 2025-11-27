@@ -99,7 +99,7 @@ const Design1 = ({ attendeeData }) => {
             <div className="mb-1" style={{color: '#9B2A26'}}>
               <Clock size={16} strokeWidth={2} />
             </div>
-            <p className="font-black text-xs" style={{color: '#9B2A26'}}>6:00 PM - 9:00 PM</p>
+            <p className="font-black text-xs" style={{color: '#9B2A26'}}>5:00 PM - 9:00 PM</p>
             <p className="text-gray-700 text-xs">EAT</p>
           </div>
         </div>

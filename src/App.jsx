@@ -17,7 +17,7 @@ export default function AttendingPosterGenerator() {
   const [eventData] = useState({
     date: '29th Nov 2025',
     venue: 'BRITAM TOWERS, UpperHill',
-    time: '6:00 PM - 9:00 PM'
+    time: '5:00 PM - 9:00 PM'
   });
 
   const [selectedDesign, setSelectedDesign] = useState(1);
